@@ -4,6 +4,9 @@ on:
     # branches:
     #   - master
   workflow_dispatch:
+permissions:
+  contents: write
+  workflows: write
 jobs:
   build:
     runs-on: ubuntu-latest
