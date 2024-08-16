@@ -31,10 +31,10 @@ jobs:
           echo "commit_id=$commit_id" >> $GITHUB_ENV
           # git push --force
 
-      # - name: Checkout to specific commit
-      #   run: |
-      #     git fetch
-      #     git checkout ${{ env.commit_id }}
+      - name: Checkout to specific commit
+        run: |
+          git fetch
+          git checkout ${{ env.commit_id }}
 
       # - name: Run modified workflow
       #   run: |
@@ -45,6 +45,7 @@ jobs:
 
       - name: Trigger modified workflow via GitHub API
         run: |
+          git log
           curl -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
