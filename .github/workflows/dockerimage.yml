@@ -31,10 +31,8 @@ jobs:
           echo "commit_id=$commit_id" >> $GITHUB_ENV
           # git push --force
 
-      - name: Checkout to specific commit
-        run: |
-          git fetch
-          git checkout ${{ env.commit_id }}
+      - name: Checkout code
+        uses: actions/checkout@${{ env.commit_id }}
 
       - name: Run modified workflow
         run: |
