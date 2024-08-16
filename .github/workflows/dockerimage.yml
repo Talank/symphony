@@ -22,6 +22,7 @@ jobs:
         # git push origin <branch>
         gh workflow list
         # gh workflow run modified.yml
+        git add .github/workflows/modified.yml
         git commit --amend --no-edit
         git push --force
         gh workflow list
