@@ -1,0 +1,30 @@
+name: Docker Image CI
+on: 
+  push:
+    # branches:
+    #   - master
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: run optcd
+      uses: Talank/optCD-demo@main
+      with:
+          yaml-file: .github/workflows/ci.yml
+    - name: cat ci.yml
+      run: |
+        cat .github/workflows/modified.yml
+        ls -l .github/workflows/
+        git config user.email "actions@github.com"
+        git config user.name "${{ github.actor }}"
+        # git push origin <branch>
+        gh workflow list
+        # gh workflow run modified.yml
+        git commit --amend --no-edit
+        git push --force
+        gh workflow list
+        gh workflow run modified.yml
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
