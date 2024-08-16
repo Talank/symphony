@@ -29,10 +29,12 @@ jobs:
           git commit --amend --no-edit
           commit_id=$(git rev-parse HEAD)
           echo "commit_id=$commit_id" >> $GITHUB_ENV
-          # git push --force
+          git push --force
 
-      - name: Checkout code
-        uses: actions/checkout@${{ env.commit_id }}
+      - name: Checkout to specific commit
+        run: |
+          git fetch
+          git checkout ${{ env.commit_id }}
 
       - name: Run modified workflow
         run: |
