@@ -4,9 +4,6 @@ on:
     # branches:
     #   - master
   workflow_dispatch:
-permissions:
-  contents: write
-  workflows: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,7 +24,17 @@ jobs:
         # gh workflow run modified.yml
         git add .github/workflows/modified.yml
         git commit --amend --no-edit
-        git push --force
+        commit_id=$(git rev-parse HEAD)
+        echo "commit_id=$commit_id" >> $GITHUB_ENV
+        # git push --force
+        gh workflow list
+        gh workflow run modified.yml
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+    - name: Checkout to specific commit
+      uses: actions/checkout@${{ env.commit_id }}
+    - name: run modified_yml
+      run: |
         gh workflow list
         gh workflow run modified.yml
       env:
